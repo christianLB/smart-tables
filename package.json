@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3005",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "gsap": "^3.7.1",
     "lodash": "^4.17.21",
     "next": "11.0.1",
     "react": "17.0.2",

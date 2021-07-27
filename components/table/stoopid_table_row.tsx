@@ -1,4 +1,10 @@
-import React, { FunctionComponent, useState } from "react";
+import gsap from "gsap";
+import React, {
+  FunctionComponent,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { Redirect } from "react-router-dom";
 import { rowId, TableCellData } from "../../models/types/table.type";
 
@@ -39,6 +45,7 @@ const StoopidTableRow: FunctionComponent<StoopidTableRowProps> = ({
   onRowSelect,
   onRowClick,
 }: StoopidTableRowProps) => {
+  const rowElement = useRef(null);
   let [expanded, setExpanded] = useState(false);
   let [redirect, setRedirect] = useState(false);
   // const { currentBreakpoint } = useBreakpointList() || '';
@@ -133,11 +140,29 @@ const StoopidTableRow: FunctionComponent<StoopidTableRowProps> = ({
     notHiddenCells.push(Cell);
   });
 
+  // useLayoutEffect(() => {
+  //   const row = rowElement.current;
+  //   const items = row.querySelectorAll(".st-cell");
+
+  //   gsap.from(items, {
+  //     x: "-=100%",
+  //     duration: 0.1,
+  //     stagger: {
+  //       amount: 0.1,
+  //       ease: "expo",
+  //     },
+  //     scale: 2,
+  //     ease: "expo",
+  //     opacity: 0,
+  //   });
+  // }, []);
+
   return (
     <>
       {redirect && <Redirect to={rowLinkUrl} push />}
 
       <div
+        ref={rowElement}
         className={[
           customClasses || "st-row",
           className || null,

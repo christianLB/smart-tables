@@ -9,11 +9,13 @@ const DataContext = React.createContext(null);
 export const useData = () => useContext(DataContext);
 interface DataProviderProps {
   api: any;
+  params: any;
   children?: JSX.Element;
 }
 export const DataProvider: FunctionComponent<DataProviderProps> = ({
   api,
   children,
+  params,
 }) => {
   const [rows, setRows] = useState([]);
   const [headers, setHeaders] = useState([]);
@@ -22,7 +24,7 @@ export const DataProvider: FunctionComponent<DataProviderProps> = ({
   const getTableData = async () => {
     try {
       setLoading(true);
-      const data = (api && (await api())) || {};
+      const data = (api && (await api(params))) || {};
       setRows(data?.rows);
       setHeaders(data?.headers);
     } catch (err) {

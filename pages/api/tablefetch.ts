@@ -36,7 +36,9 @@ export const tableFetch = async (url: string) => {
     //const url = 'https://fakerapi.it/api/v1/persons?_quantity=10&_gender=male&_birthday_start=2005-01-01'
     const fetchData = await fetch(url)
     const json = await fetchData.json()
-    const data = json.data
+    let data = json.data
+    if (json.All)
+        data = [json.All]
 
     const model = new tableModel(data)
     return { rows: model.rows, headers: model.headers }

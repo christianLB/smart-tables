@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { Breakpoints, TableCellData } from "../../models/types/table.type";
+import { Effect } from "../effect";
 
 type StoopidTableCellProps = {
   cell: TableCellData;
@@ -31,13 +32,16 @@ const StoopidTableCell: FunctionComponent<StoopidTableCellProps> = ({
   onClick,
 }: StoopidTableCellProps) => (
   //!cellShouldBeHidden(currentBreakpoint) &&
-  
-  <div
-    className={[customClassName || "st-cell", className || null].filter(b => b !== null).join(' ')}
-    onClick={onClick}
-  >
-    {cell.component}
-  </div>
+  <Effect>
+    <div
+      className={[customClassName || "st-cell", className || null]
+        .filter(b => b !== null)
+        .join(" ")}
+      onClick={onClick}
+    >
+      {cell.component}
+    </div>
+  </Effect>
 );
 
 export default StoopidTableCell;

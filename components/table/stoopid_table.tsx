@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react"; // we need this to make JSX compile
+import React, { FunctionComponent, useRef } from "react"; // we need this to make JSX compile
 import {
   TableHeaderCellData,
   TableRowData,
@@ -33,6 +33,7 @@ const StoopidTable: FunctionComponent<StoopidTableProps> = ({
   selectedRows,
   onRowSelect,
 }: StoopidTableProps) => {
+  const tableElement = useRef(null);
   const responsiveCellsIndexes: TableHeaderCellData[] = [];
 
   [...headerCells].map((cell, cellIndex) => {
@@ -56,6 +57,7 @@ const StoopidTable: FunctionComponent<StoopidTableProps> = ({
 
   return (
     <div
+      ref={tableElement}
       id={id}
       className={[className, (busy && "busy") || null]
         .filter(b => b !== null)
@@ -95,9 +97,9 @@ const StoopidTable: FunctionComponent<StoopidTableProps> = ({
           return RowComponent;
         })}
       </>
-      {isLoading && <div className="loadingpane p3">loading...</div>}
+      {/* {!isLoading && <div className="loadingpane">loading...</div>} */}
       {!rows.length && (
-        <div className="st-row flex-center p3">
+        <div className="noresults">
           <span>No Results Found.</span>
         </div>
       )}
