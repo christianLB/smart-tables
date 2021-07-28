@@ -84,13 +84,29 @@ $border-color: $table-color2;
   }
 }
 
+.controls {
+  flex-direction: column;
+  width: 253px;
+  display: flex;
+  padding-right: 50px;
+}
+
 .box {
   border: 1px solid black;
   height: 100px;
   width: 200px;
-  place-self: center;
+  //place-self: center;
   overflow: hidden;
   place-content: center;
   align-items: center;
   display: flex;
+  position: relative;
+}
+
+.buttons {
+  width: 450px;
+  button {
+    width: 30px;
+    height: 30px;
+  }
 }

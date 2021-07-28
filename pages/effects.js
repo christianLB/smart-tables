@@ -3,28 +3,52 @@ import styles from '../styles/Home.module.scss'
 import { Effect } from '../components/effect'
 import { debounce } from 'lodash'
 import { useEffect } from 'react';
+import * as transitions from '../utils/transitions'
 
 export default function Home() {
   const [value, setValue] = useState('hi')
-  const [value2, setValue2] = useState('hi')
-  const debouncedValue = useDebounce(value, 500)
+  const [onEnter, setOnEnter] = useState('fadeIn')
+  const [onLeave, setOnLeave] = useState('fadeOut')
+  //const debouncedValue = useDebounce(value, 500)
 
-  const apply = () => {
-    setValue2(value)
-  }
+  // const apply = () => {
+  //   setValue2(value)
+  // }
 
-  useEffect(() => {
-    apply()
-  }, [debouncedValue])
-
+  // useEffect(() => {
+  //   apply()
+  // }, [debouncedValue])
+  const transitionOptions = () => Object.keys(transitions).map(transition => <option key={transition} value={transition}>{transition}</option>)
 
   return (
     <div className={styles['page-container']} >
-      <button onClick={() => setValue2('hola')}>hola</button>
-      <button onClick={() => setValue2('chau')}>chau</button>
-      <button onClick={() => setValue2('mierda')}>mierda</button>
+      <div className={'controls'}>
+        <label htmlFor={'buttons'}>Render: </label>
+        <div name={'buttons'} className={'buttons'}>
+          <button onClick={() => setValue('value 1')}>1</button>
+          <button onClick={() => setValue('value 2')}>2</button>
+          <button onClick={() => setValue('value 3')}>3</button>
+          <button onClick={() => setValue(<icon>✈</icon>)}>✈</button>
+          <button onClick={() => setValue(<icon>😲</icon>)}>😲</button>
+          <button onClick={() => setValue(<icon>🚴</icon>)}>🚴</button>
+          <button onClick={() => setValue(<icon>👙</icon>)}>👙</button>
+          <button onClick={() => setValue(<icon>🏀</icon>)}>🏀</button>
+        </div>
+
+        <label htmlFor={'entering'}>entering: </label>
+        <select name={'entering'} value={onEnter} onChange={(e) => setOnEnter(e.target.value)}>
+          {transitionOptions()}
+        </select>
+        <label htmlFor={'leaving'}>leaving: </label>
+        <select value={onLeave} onChange={(e) => setOnLeave(e.target.value)}>
+          {transitionOptions()}
+        </select>
+      </div>
+
       <div className={'box'}>
-        <Effect><div>{value2}</div></Effect>
+        <Effect onEnter={onEnter} onLeave={onLeave}>
+          <div>{value}</div>
+        </Effect>
       </div>
     </div>
   )

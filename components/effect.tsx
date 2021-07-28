@@ -1,11 +1,14 @@
-import gsap from "gsap";
 import React, { useLayoutEffect, useRef, useState } from "react";
-
+import * as transitions from "../utils/transitions";
 // function numberWithCommas(x) {
 //   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 // }
 
-export const Effect = ({ children }) => {
+export const Effect = ({
+  children,
+  onEnter = "fadeIn",
+  onLeave = "fadeOut",
+}) => {
   const outRef = useRef(null);
   const out2Ref = useRef(null);
 
@@ -29,38 +32,13 @@ export const Effect = ({ children }) => {
     setOut(<div ref={outRef}>{children.props.children}</div>);
     setOut2(<div ref={out2Ref}>{prevHTML}</div>);
     setPrevHTML(children.props.children);
-
-    const enter = gsap.fromTo(
-      outRef.current,
-      {
-        x: "-=110px",
-        opacity: 0,
-      },
-      {
-        duration: 0.5,
-        ease: "linear",
-        x: "center",
-        position: "absolute",
-        opacity: 1,
-      }
-    );
-    const leave = gsap
-      .fromTo(
-        out2Ref.current,
-        {
-          x: "center",
-          ease: "linear",
-        },
-        {
-          duration: 0.5,
-          x: "+=130px",
-        }
-      )
-      .restart();
+    const enter = transitions[onEnter ? onEnter : "fadeIn"](outRef.current);
+    const leave = transitions[onLeave ? onLeave : "fadeOut"](out2Ref.current);
     return () => {
-      //tl.kill();
+      enter.kill();
+      leave.kill();
     };
-  }, [children.props]);
+  }, [children.props, onEnter, onLeave]);
 
   return (
     <>
