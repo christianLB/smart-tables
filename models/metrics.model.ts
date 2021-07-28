@@ -1,6 +1,6 @@
 import { mapKeys, keys, snakeCase, camelCase, assignIn } from 'lodash'
 import { buildTableRow } from '../components/table/smart-table'
-import { TableColumnConfig } from './types/table.type'
+import { TableColumnConfig, TableRowData } from './types/table.type'
 
 export class MetricsModelBase {
     constructor(data: any) {
@@ -18,7 +18,7 @@ export class MetricsModelBase {
         })
         return compareMap //returns a new mapped object with both current and compare values.
     }
-    tableRow(columns: TableColumnConfig[], className: string, rowKey: string, rowLinkUrl): StoopidTableRow {
+    tableRow(columns: TableColumnConfig[], className: string, rowKey: string, rowLinkUrl): TableRowData {
         return buildTableRow(this, columns, rowKey, className, rowLinkUrl)
     }
 }
