@@ -104,9 +104,11 @@ $border-color: $table-color2;
 }
 
 .buttons {
-  width: 450px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 150px;
   button {
-    width: 30px;
-    height: 30px;
+    //width: 30px;
+    //height: 30px;
   }
 }

@@ -9,41 +9,42 @@ export const Effect = ({
   onEnter = "fadeIn",
   onLeave = "fadeOut",
 }) => {
-  const outRef = useRef(null);
-  const out2Ref = useRef(null);
-
-  // const cloneChildren = (children, rref) => {
-  //   return (
-  //     <>
-  //       {React.Children.map(children, (child, index) =>
-  //         React.cloneElement(child, {
-  //           ref: ref => (rref.current[index] = ref),
-  //         })
-  //       )}
-  //     </>
-  //   );
-  // };
+  const enteringRef = useRef(null);
+  const leavingRef = useRef(null);
 
   const [prevHTML, setPrevHTML] = useState(null);
-  const [out, setOut] = useState(null);
-  const [out2, setOut2] = useState(null);
+  const [entering, setEntering] = useState(null);
+  const [leaving, setLeaving] = useState(null);
 
   useLayoutEffect(() => {
-    setOut(<div ref={outRef}>{children.props.children}</div>);
-    setOut2(<div ref={out2Ref}>{prevHTML}</div>);
+    const enterValue = children.props.children;
+    const leaveValue = prevHTML;
+
+    setEntering(<div ref={enteringRef}>{children.props.children}</div>);
+    setLeaving(<div ref={leavingRef}>{prevHTML}</div>);
     setPrevHTML(children.props.children);
-    const enter = transitions[onEnter ? onEnter : "fadeIn"](outRef.current);
-    const leave = transitions[onLeave ? onLeave : "fadeOut"](out2Ref.current);
+    // const enter = transitions[onEnter ? onEnter : "fadeIn"](
+    //   enteringRef.current
+    // );
+    // const leave = transitions[onLeave ? onLeave : "fadeOut"](
+    //   leavingRef.current
+    // );
+    const enter = transitions.enter(
+      enteringRef.current,
+      enterValue,
+      leaveValue
+    );
+    const leave = transitions.leave(leavingRef.current);
     return () => {
-      enter.kill();
-      leave.kill();
+      enter && enter.kill();
+      leave && leave.kill();
     };
   }, [children.props, onEnter, onLeave]);
 
   return (
     <>
-      {out}
-      {out2}
+      {entering}
+      {leaving}
     </>
   );
 };

@@ -9,6 +9,7 @@ export default function Home() {
   const [value, setValue] = useState('hi')
   const [onEnter, setOnEnter] = useState('fadeIn')
   const [onLeave, setOnLeave] = useState('fadeOut')
+  const [customValue, setCustomValue] = useState('')
   //const debouncedValue = useDebounce(value, 500)
 
   // const apply = () => {
@@ -28,12 +29,17 @@ export default function Home() {
           <button onClick={() => setValue('value 1')}>1</button>
           <button onClick={() => setValue('value 2')}>2</button>
           <button onClick={() => setValue('value 3')}>3</button>
+          <button onClick={() => setValue(1000)}>1000</button>
+          <button onClick={() => setValue(2000)}>2000</button>
           <button onClick={() => setValue(<icon>✈</icon>)}>✈</button>
           <button onClick={() => setValue(<icon>😲</icon>)}>😲</button>
           <button onClick={() => setValue(<icon>🚴</icon>)}>🚴</button>
           <button onClick={() => setValue(<icon>👙</icon>)}>👙</button>
           <button onClick={() => setValue(<icon>🏀</icon>)}>🏀</button>
         </div>
+
+        <label htmlFor={'custom'}>custom: </label>
+        <input type={'text'} value={customValue} onChange={e => setCustomValue(e.target.value)} /> <button onClick={() => setValue(customValue)}>Set</button>
 
         <label htmlFor={'entering'}>entering: </label>
         <select name={'entering'} value={onEnter} onChange={(e) => setOnEnter(e.target.value)}>
